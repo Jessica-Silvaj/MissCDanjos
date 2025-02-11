@@ -1,19 +1,16 @@
-const { Pool  } = require('pg');
+const { Pool } = require('pg');
 
 const pool = new Pool({
-    user: "0194f5e5-f478-7dbb-af7f-eeaa682c3e2e",
-    password: "2881563b-1205-4567-917a-0307d4dceaf9",
+    user: "0194f609-d13c-7d74-a304-af1d65b8d2f9",
+    password: "07e60762-915a-4e3d-a046-da792d956a12",
     host: "us-west-2.db.thenile.dev",
     port: 5432,
     database: "MissCDanjos",
 });
 
-
-let client;
-
 const connectDB = async () => {
     try {
-        client = await pool.connect(); // Pega uma conexão do pool
+        const client = await pool.connect(); // Pega uma conexão do pool
         console.log('Conexão ao banco de dados MissCDanjos estabelecida com sucesso!');
         return client;
     } catch (error) {
@@ -22,12 +19,14 @@ const connectDB = async () => {
     }
 };
 
-const disconnectDB = async () => {
+const disconnectDB = async (client) => {
     try {
-        await pool.end(); // Encerra todas as conexões do pool
-        console.log('Todas as conexões foram encerradas.');
+        if (client) {
+            client.release();  // Libera a conexão ao invés de encerrar todas
+            console.log('Conexão liberada com sucesso!');
+        }
     } catch (error) {
-        console.error('Erro ao encerrar as conexões com o banco de dados:', error);
+        console.error('Erro ao liberar a conexão com o banco de dados:', error);
     }
 };
 

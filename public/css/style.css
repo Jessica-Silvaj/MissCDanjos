@@ -38,6 +38,61 @@ body {
     box-sizing: border-box;
 }
 
+#alertContainer {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    z-index: 9999;
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.alert {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    max-width: 400px;
+    animation: fadeIn 0.5s ease-in-out;
+    color: #333333;
+    /* Cor do texto */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Sombra do alerta */
+}
+
+.alert-success {
+    background: #4CAF50;
+    background-color: #4CAF50;
+    /* Cor de fundo para sucesso */
+    color: white;
+    border: 2px solid #3e8e41;
+}
+
+.alert-error {
+    background: #f44336;
+    background-color: #f44336;
+    /* Cor de fundo para erro */
+    color: white;
+    border: 2px solid #d32f2f;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .wave {
     width: 40%;
     position: fixed;
@@ -92,16 +147,10 @@ body {
 .sub2 {
     position: absolute;
     top: 345px;
-    left: 600px;
+    left: 605px;
     font-size: 30px;
     color: #ff3d6c;
 }
-
-/* .ramos{
-    position: absolute;
-    top: 100px;
-    left: 700px;
-} */
 
 form {
     background: rgba(255, 255, 255, 0.8);
@@ -117,7 +166,7 @@ form {
     width: 90%;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     left: 1000px;
-  }
+}
 
 /* Área de opções: cada candidato será exibido em um grid */
 .opcoes {
@@ -126,7 +175,7 @@ form {
     gap: 80px;
     width: 100%;
     margin-top: 20px;
-  }
+}
 
 /* Agrupamento de cada candidato */
 .candidato {
@@ -142,7 +191,7 @@ form {
     gap: 10px;
     cursor: pointer;
 }
-  
+
 /* Evita que o input de rádio sofra redimensionamento indevido */
 .opcao input[type="radio"] {
     flex-shrink: 0;
@@ -167,145 +216,58 @@ button {
     cursor: pointer;
     font-size: 16px;
     transition: background 0.3s ease;
-  }
-  
-  button:hover {
+}
+
+button:hover {
     background: #e3345a;
-  }
-  
+}
 
-/* Media Queries */
+
+/* * Media Queries */
 @media (max-width: 700px) {
-    .wave {
-        width: 50%;
-    }
-
-    .logo {
-        width: 120px;
-        top: 10px;
-        left: 10px;
-    }
-    
-    .content .img-logo {
-        width: auto;      /* Reduz a largura */
-        height: auto;      /* Ajusta automaticamente a altura para manter a proporção */
-        left: 70px;        /* Ajusta a posição horizontal */
-        top: 70%;
-        transform: translateY(-50%);
-    }
-
-    .texto {
-        font-size: 70px; /* Reduz o tamanho da fonte */
-        left: 200px;     /* Ajusta a posição horizontal */
-        top: 20px;       /* Ajusta a posição vertical */
-        width: auto;
-    }
-
-    .sub {
-        font-size: 20px;
-        left: 250px;
-        top: 50px;
-    }
-
-    .sub2 {
-        font-size: 20px;
-        left: 300px;
-        top: 250px;
-    }
-
-    .container {
-        height: auto;
-        padding: 20px;
-    }
-
-    .texto {
-        font-size: 70px; /* Reduz o tamanho da fonte */
-        left: 200px;     /* Ajusta a posição horizontal */
-        top: 20px;       /* Ajusta a posição vertical */
-        width: auto;
-    }
-
-    .sub {
-        font-size: 20px;
-        left: 250px;
-        top: 50px;
-    }
-
-    .sub2 {
-        font-size: 20px;
-        left: 300px;
-        top: 250px;
-    }
-
     form {
         padding: 25px 30px;
-        max-width: 350px;
-        left: 200px
+        max-width: 600px; /* Reduz o tamanho máximo do formulário */
+        width: 100%; /* A largura agora será 100% da tela */
+        left: 0; /* Remove o deslocamento para a esquerda */
+    }
+
+    /* Alterando a estrutura de opções para grid */
+    .opcoes {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Ajuste no grid */
+        gap: 10px; /* Diminui o espaço entre os elementos */
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .opcao {
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Centraliza as opções dentro do grid */
+        gap: 10px;
     }
 
     button {
         font-size: 14px;
-        padding: 8px 14px;
+        padding: 8px 16px;
+        width: 100%; /* Faz o botão ocupar toda a largura disponível */
     }
 }
 
+/* Ajustes para telas ainda menores */
 @media (max-width: 480px) {
-    .wave {
-        width: 60%;
-    }
-
-    .logo {
-        width: 100px;
-        top: 5px;
-        left: 5px;
-    }
-    
-    .content .img-logo {
-        width: auto;      /* Largura ainda menor para telas pequenas */
-        height: auto;
-        left: 25px;        /* Ajusta a posição horizontal para telas menores */
-        top: 70%;
-        transform: translateY(-50%);
-    }
-    
-    .container {
-        height: auto;
-        padding: 10px;
-    }
-
-    .texto {
-        font-size: 50px;
-        left: 100px;
-        top: 15px;
-    }
-
-    .sub {
-        font-size: 16px;
-        left: 150px;
-        top: 40px;
-    }
-
-    .sub2 {
-        font-size: 16px;
-        left: 180px;
-        top: 200px;
-    }
     form {
-        padding: 20px;
-        max-width: 320px;
-      }
-      
-      .foto {
-        width: 40px;
-        height: 40px;
-      }
-      
-      .opcao {
-        gap: 8px;
-      }
-      
-      button {
+        padding: 15px 20px;
+        max-width: 100%; /* Formulário vai ocupar toda a largura */
+    }
+
+    .opcoes {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Ajuste na largura das opções */
+    }
+
+    button {
         font-size: 14px;
         padding: 8px 16px;
-      }
+    }
 }

@@ -35,6 +35,12 @@
                 <img src="./images/pageant-pana.png">
             </div>
 
+            <div class="background-login">
+                <div class="backgroundLoginWeb2">
+                    <div id="alertContainer"></div>
+                </div>
+            </div>
+
             <div class="textos">
                 <h1 class="texto">Miss Anjos</h1>
                 <p class="sub"><b>1º Edição</b></p>
@@ -127,41 +133,48 @@
         </form>
     </div>
     <script>
-        // Enviar o voto para o servidor
-        const form = document.getElementById('formulario');
+// Função para exibir mensagens no alertContainer
+function showMessage(message, type = 'success') {
+    const alertContainer = document.getElementById('alertContainer');
+    alertContainer.innerHTML = `<div class="alert ${type}">${message}</div>`;
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Impede o envio padrão do formulário
+    // Remove o alerta após 5 segundos
+    setTimeout(() => {
+        alertContainer.innerHTML = '';
+    }, 5000);
+}
 
-            const selected = document.querySelector('input[name="voto"]:checked');
-            if (!selected) {
-                alert('Por favor, selecione uma das candidatas!');
-                return;
-            }
+// Enviar o voto para o servidor
+const form = document.getElementById('formulario');
 
-            const candidate = selected.value; // Valor do candidato selecionado
+form.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Impede o envio padrão do formulário
 
-            try {
-                const response = await fetch('/votacao', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ candidate }), // Envia o valor do candidato
-                });
+    const selected = document.querySelector('input[name="voto"]:checked');
+    if (!selected) {
+        showMessage('❌ Por favor, selecione uma das candidatas!', 'error');
+        return;
+    }
 
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message);
-                }
+    const candidate = selected.value; // Valor do candidato selecionado
 
-                const data = await response.json();
-                alert(data.message); // Alerta que o voto foi registrado com sucesso
-            } catch (error) {
-                console.error('Erro ao registrar voto:', error);
-                alert('Houve um erro ao registrar seu voto.');
-            }
+    try {
+        const response = await fetch('/votacao', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ candidate }), // Envia o valor do candidato
         });
+
+        const data = await response.json();
+        showMessage(data.message, data.type); // Exibe o alerta com base no tipo
+    } catch (error) {
+        console.error('Erro ao registrar voto:', error);
+        showMessage('❌ Houve um erro ao registrar seu voto.', 'error');
+    }
+});
+
     </script>
 </body>
 
