@@ -1,62 +1,88 @@
 const { connectDB, disconnectDB } = require('../bd/conexao');
 
-exports.handler = async (req, res) => {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ message: 'Método não permitido' });
+exports.handler = async (event) => {
+    // Verificar se o método HTTP é POST
+    if (event.httpMethod !== 'POST') {
+        return {
+            statusCode: 405,
+            body: JSON.stringify({ message: 'Método não permitido' })
+        };
     }
 
-    let db;
+    let db = null;
     try {
-        const { candidate } = req.body;
+        const { candidate } = JSON.parse(event.body);
+        console.log(candidate);
+
+        // Verificar se o candidato foi fornecido
         if (!candidate) {
-            return res.status(400).json({ message: "Candidato não selecionado!" });
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ message: 'Candidato não selecionado!' })
+            };
         }
 
-        const rawIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-        const ip = rawIp === '::1' || rawIp.startsWith('::ffff:') ? '127.0.0.1' : rawIp;
-
-        if (!ip || ip === 'undefined') {
-            return res.status(400).json({ message: "Não foi possível determinar seu IP!" });
-        }
+        // Obter o IP do voto, considerando o X-Forwarded-For ou usando o IP local
+        const ip = event.headers['x-nf-client-connection-ip'] || '127.0.0.1';  // Usando o cabeçalho ou IP local
 
         console.log(ip);
 
-        db = await connectDB(); // Conecta ao banco
+        // Verificar se o IP foi fornecido e se é válido
+        const isValidIP = (ip) => {
+            const ipRegex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){2}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+            return ipRegex.test(ip) || ip === '::1' || ip === '127.0.0.1'; // Aceitar IPv6 (::1) e IPv4 (127.0.0.1)
+        };
 
+        // Verificar se o IP é válido
+        if (!ip || ip.trim() === '' || !isValidIP(ip)) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ message: 'Não foi possível determinar seu IP!' })
+            };
+        }
+
+        // Conectar ao banco de dados
+        db = await connectDB();
         await db.query('BEGIN');
-
-        // Verifica se o candidato existe
+        
+        // Verificar se o candidato existe
         const candidateCheck = await db.query('SELECT * FROM candidato WHERE id = $1', [candidate]);
         if (candidateCheck.rows.length === 0) {
             await db.query('ROLLBACK');
-            return res.status(400).json({ message: "Candidata inválida!" });
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ message: 'Candidata inválida!' })
+            };
         }
 
-        // Verifica se o IP já votou
+        // Verificar se o IP já votou
         const checkVote = await db.query('SELECT * FROM votos WHERE ip = $1', [ip]);
         if (checkVote.rows.length > 0) {
             await db.query('ROLLBACK');
-            return res.status(400).json({ message: "Você já votou!" });  // Retorna erro 400 se o IP já tiver votado
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ message: 'Você já votou!' })
+            };
         }
 
-        // Registra o voto
-        const result = await db.query(
-            'INSERT INTO votos (candidato_id, ip) VALUES ($1, $2) RETURNING *',
-            [candidate, String(ip)]
-        );
-
+        // Registrar o voto no banco de dados
+        await db.query('INSERT INTO votos (candidato_id, ip) VALUES ($1, $2)', [candidate, ip]);
         await db.query('COMMIT');
-        res.status(200).json({ message: "Voto registrado com sucesso!", vote: result.rows[0] });
 
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ message: 'Voto registrado com sucesso!' })
+        };
     } catch (error) {
-        console.error(error);
-        if (db) {
-            await db.query('ROLLBACK');
-        }
-        return res.status(500).json({ message: "Erro ao processar o voto!" });
+        // Se ocorrer erro, reverter a transação e retornar erro 500
+        if (db) await db.query('ROLLBACK');
+        console.error(error); // Logar o erro para debugging
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: 'Erro ao processar o voto!' })
+        };
     } finally {
-        if (db) {
-            await disconnectDB(db); // Passa o client para liberar a conexão
-        }
+        // Desconectar do banco de dados
+        if (db) await disconnectDB(db);
     }
 };

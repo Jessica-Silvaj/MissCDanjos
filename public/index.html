@@ -118,13 +118,6 @@
                     <label class="opcao" for="opcao10">
                         <input type="radio" name="voto" value="10" id="opcao10">
                         <img src="./images/avatar.png" class="foto" alt="Candidata 10">
-                        <span>Julie Kim</span>
-                    </label>
-                </div>
-                <div class="candidato">
-                    <label class="opcao" for="opcao11">
-                        <input type="radio" name="voto" value="11" id="opcao11">
-                        <img src="./images/avatar.png" class="foto" alt="Candidata 11">
                         <span>Naomi Nakamura</span>
                     </label>
                 </div>
@@ -133,48 +126,46 @@
         </form>
     </div>
     <script>
-// Função para exibir mensagens no alertContainer
-function showMessage(message, type = 'success') {
-    const alertContainer = document.getElementById('alertContainer');
-    alertContainer.innerHTML = `<div class="alert ${type}">${message}</div>`;
+    function showMessage(message, type = '') {
+        const alertContainer = document.getElementById('alertContainer');
+        
+        // Verifica o tipo do alerta e adiciona a classe correspondente
+        let alertClass = '';
+        if (type === 'success') {
+            alertClass = 'alert-success'; // Sucesso
+        } else if (type === 'error') {
+            alertClass = 'alert-error'; // Erro
+        }
 
-    // Remove o alerta após 5 segundos
-    setTimeout(() => {
-        alertContainer.innerHTML = '';
-    }, 5000);
-}
+        alertContainer.innerHTML = `<div class="alert ${alertClass}">${message}</div>`;
 
-// Enviar o voto para o servidor
-const form = document.getElementById('formulario');
-
-form.addEventListener('submit', async (e) => {
-    e.preventDefault(); // Impede o envio padrão do formulário
-
-    const selected = document.querySelector('input[name="voto"]:checked');
-    if (!selected) {
-        showMessage('❌ Por favor, selecione uma das candidatas!', 'error');
-        return;
+        // Remove o alerta após 5 segundos
+        setTimeout(() => {
+            alertContainer.innerHTML = '';
+        }, 5000);
     }
 
-    const candidate = selected.value; // Valor do candidato selecionado
+        document.getElementById('formulario').addEventListener('submit', async (e) => {
+            e.preventDefault();
+          const selected = document.querySelector('input[name="voto"]:checked');
+            if (!selected) {
+                showMessage('❌ Por favor, selecione uma das candidatas!', 'error');
+                return;
+            }
 
-    try {
-        const response = await fetch('/votacao', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ candidate }), // Envia o valor do candidato
+            const candidate = selected.value;
+            try {
+                const response = await fetch('/.netlify/functions/votacao', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ candidate })
+                });
+                const data = await response.json();
+                showMessage(data.message, data.type || 'success');
+            } catch (error) {
+                showMessage('❌ Erro ao registrar seu voto.', 'error');
+            }
         });
-
-        const data = await response.json();
-        showMessage(data.message, data.type); // Exibe o alerta com base no tipo
-    } catch (error) {
-        console.error('Erro ao registrar voto:', error);
-        showMessage('❌ Houve um erro ao registrar seu voto.', 'error');
-    }
-});
-
     </script>
 </body>
 
