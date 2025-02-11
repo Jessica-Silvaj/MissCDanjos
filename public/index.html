@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>Miss Anjos | 1º Edição</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicons/180x180.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicons/32x32.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicons/16x16.ico">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://x.com/AnjosNews">
+    <meta name="twitter:title" content="Anjos News | O jornal mais divertido e criativo">
+    <meta name="twitter:description"
+        content="Venha fazer parte do time AnjosNews! Transformamos fofocas em arte e notícias em diversão, com criatividade e um toque irreverente.">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/fontawesome.css">
+</head>
+
+<body>
+    <div class="container">
+        <img class="wave" src="./images/wave_pink.png">
+
+        <header>
+            <img class="logo" src="./images/logo.png">
+        </header>
+
+        <section class="content">
+            <div class="img-logo">
+                <img src="./images/pageant-pana.png">
+            </div>
+
+            <div class="textos">
+                <h1 class="texto">Miss Anjos</h1>
+                <p class="sub"><b>1º Edição</b></p>
+                <p class="sub2"><b>Votação</b></p>
+            </div>
+
+            <!-- <img class="ramos" src="./images/d_4_edited-removebg-preview - Copia.png"> -->
+        </section>
+        <form id="formulario" action="#" autocomplete="off">
+            <div class="opcoes">
+                <div class="candidato">
+                    <label class="opcao" for="opcao1">
+                        <input type="radio" name="voto" value="1" id="opcao1">
+                        <img src="./images/IMG-3523.png" class="foto" alt="Sofi Coseneto">
+                        <span>Sofi Coseneto</span>
+                    </label>
+                </div>
+                <div class="candidato">
+                    <label class="opcao" for="opcao2">
+                        <input type="radio" name="voto" value="2" id="opcao2">
+                        <img src="./images/IMG-3539.png" class="foto" alt="Mônica Hills">
+                        <span>Mônica Hills</span>
+                    </label>
+                </div>
+                <div class="candidato">
+                    <label class="opcao" for="opcao3">
+                        <input type="radio" name="voto" value="3" id="opcao3">
+                        <img src="./images/imagem-2025-02-10-222349302.png" class="foto" alt="Kate Higanbana">
+                        <span>Kate Higanbana</span>
+                    </label>
+                </div>
+                <div class="candidato">
+                    <label class="opcao" for="opcao4">
+                        <input type="radio" name="voto" value="4" id="opcao4">
+                        <img src="./images/image-enhanced-29.png" class="foto" alt="Britney Spears">
+                        <span>Britney Spears</span>
+                    </label>
+                </div>
+                <div class="candidato">
+                    <label class="opcao" for="opcao5">
+                        <input type="radio" name="voto" value="5" id="opcao5">
+                        <img src="./images/Screenshot-2605.png" class="foto" alt="Astrid Hansen">
+                        <span>Astrid Hansen</span>
+                    </label>
+                </div>
+                <div class="candidato">
+                    <label class="opcao" for="opcao6">
+                        <input type="radio" name="voto" value="6" id="opcao6">
+                        <img src="./images/ghhghhhhh.png" class="foto" alt="Cacau Becker">
+                        <span>Cacau Becker</span>
+                    </label>
+                </div>
+                <div class="candidato">
+                    <label class="opcao" for="opcao7">
+                        <input type="radio" name="voto" value="7" id="opcao7">
+                        <img src="./images/image.png" class="foto" alt="Malvina Maurer">
+                        <span>Malvina Maurer</span>
+                    </label>
+                </div>
+                <div class="candidato">
+                    <label class="opcao" for="opcao8">
+                        <input type="radio" name="voto" value="8" id="opcao8">
+                        <img src="./images/avatar.png" class="foto" alt="Candidata 8">
+                        <span>Kalyne Miller</span>
+                    </label>
+                </div>
+                <div class="candidato">
+                    <label class="opcao" for="opcao9">
+                        <input type="radio" name="voto" value="9" id="opcao9">
+                        <img src="./images/avatar.png" class="foto" alt="Candidata 9">
+                        <span>Cecilia Lepavlov</span>
+                    </label>
+                </div>
+                <div class="candidato">
+                    <label class="opcao" for="opcao10">
+                        <input type="radio" name="voto" value="10" id="opcao10">
+                        <img src="./images/avatar.png" class="foto" alt="Candidata 10">
+                        <span>Julie Kim</span>
+                    </label>
+                </div>
+                <div class="candidato">
+                    <label class="opcao" for="opcao11">
+                        <input type="radio" name="voto" value="11" id="opcao11">
+                        <img src="./images/avatar.png" class="foto" alt="Candidata 11">
+                        <span>Naomi Nakamura</span>
+                    </label>
+                </div>
+            </div>
+            <button type="submit">Votar</button>
+        </form>
+    </div>
+    <script>
+        // Enviar o voto para o servidor
+        const form = document.getElementById('formulario');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Impede o envio padrão do formulário
+
+            const selected = document.querySelector('input[name="voto"]:checked');
+            if (!selected) {
+                alert('Por favor, selecione uma das candidatas!');
+                return;
+            }
+
+            const candidate = selected.value; // Valor do candidato selecionado
+
+            try {
+                const response = await fetch('/votacao', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ candidate }), // Envia o valor do candidato
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message);
+                }
+
+                const data = await response.json();
+                alert(data.message); // Alerta que o voto foi registrado com sucesso
+            } catch (error) {
+                console.error('Erro ao registrar voto:', error);
+                alert('Houve um erro ao registrar seu voto.');
+            }
+        });
+    </script>
+</body>
+
+</html>
