@@ -12,8 +12,7 @@ INSERT INTO candidato (id, name) VALUES (6 , 'Cacau Becker');
 INSERT INTO candidato (id, name) VALUES (7 , 'Malvina Maurer');
 INSERT INTO candidato (id, name) VALUES (8 , 'Kalyne Miller');
 INSERT INTO candidato (id, name) VALUES (9 , 'Ayumi Murakami');
-INSERT INTO candidato (id, name) VALUES (10 , 'Sara Dexter');
-INSERT INTO candidato (id, name) VALUES (11 , 'Elisa Davis');
+INSERT INTO candidato (id, name) VALUES (10 , 'Elisa Davis');
 
 CREATE TABLE votos (
     id SERIAL PRIMARY KEY,
