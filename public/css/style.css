@@ -218,26 +218,21 @@ button:hover {
     background: #e3345a;
 }
 
-@media (max-width: 1361px) {
-    .texto {
-        font-size: 40px;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
+@media (max-width: 1000px) {
+     .texto {
+        display: none
+    }
+
+    .logo{
+        display: none;
     }
 
     .sub {
-        font-size: 20px;
-        top: 10px;
-        left: 60%;
-        transform: translateX(-50%);
+        display: none;
     }
 
     .sub2 {
-        font-size: 20px;
-        top: 140px;
-        left: 65%;
-        transform: translateX(-50%);
+        display: none;
     }
 
     .content .img-logo {
@@ -273,24 +268,15 @@ button:hover {
 
 @media (max-width: 500px) {
     .texto {
-        font-size: 40px;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
+        display: none
     }
 
-    .sub {
-        font-size: 20px;
-        top: 10px;
-        left: 60%;
-        transform: translateX(-50%);
+    .sub, .sub2 {
+        display: none
     }
-
-    .sub2 {
-        font-size: 20px;
-        top: 140px;
-        left: 65%;
-        transform: translateX(-50%);
+    
+    .logo{
+        display: none
     }
 
     .content .img-logo {
@@ -326,17 +312,11 @@ button:hover {
 
 @media (max-width: 400px) {
     .texto {
-        font-size: 30px;
-        top: 15px;
-        left: 50%;
-        transform: translateX(-50%);
+        display: none
     }
 
     .sub, .sub2 {
-        font-size: 18px;
-        top: 10px;
-        left: 55%;
-        transform: translateX(-50%);
+        display: none
     }
 
     .content .img-logo {
@@ -361,6 +341,10 @@ button:hover {
         height: 60px;
     }
 
+    .logo{
+        display: none
+    }
+
     button {
         width: 100%;
     }
@@ -368,24 +352,15 @@ button:hover {
 
 @media (max-width: 300px) {
     .texto {
-        font-size: 30px;
-        top: 100px;
-        left: 50%;
-        transform: translateX(-50%);
+        display: none
     }
 
     .sub{
-        font-size: 18px;
-        top: 10px;
-        left: 55%;
-        transform: translateX(-50%);
+        display: none
     }
 
     .sub2 {
-        font-size: 18px;
-        top: 10px;
-        left: 55%;
-        transform: translateX(-50%);
+        display: none
     }
 
     .content .img-logo {
@@ -408,6 +383,9 @@ button:hover {
     .foto {
         width: 30px;
         height: 30px;
+    }
+    .logo{
+        display: none
     }
 
     button {
