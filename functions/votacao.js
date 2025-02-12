@@ -23,7 +23,7 @@ exports.handler = async (event) => {
         }
 
         // Obter o IP do voto, considerando o X-Forwarded-For ou usando o IP local
-        const ip = event.headers['x-nf-client-connection-ip'] || '127.0.0.1';  // Usando o cabeçalho ou IP local
+        const ip = event.headers['x-forwarded-for']?.split(',')[0] || event.headers['x-nf-client-connection-ip'] || '127.0.0.1';// Usando o cabeçalho ou IP local
 
         console.log(ip);
 
