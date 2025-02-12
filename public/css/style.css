@@ -67,16 +67,12 @@ body {
 
 .alert-success {
     background: #4CAF50;
-    background-color: #4CAF50;
-    /* Cor de fundo para sucesso */
     color: white;
     border: 2px solid #3e8e41;
 }
 
 .alert-error {
     background: #f44336;
-    background-color: #f44336;
-    /* Cor de fundo para erro */
     color: white;
     border: 2px solid #d32f2f;
 }
@@ -222,52 +218,199 @@ button:hover {
     background: #e3345a;
 }
 
+@media (max-width: 1361px) {
+    .texto {
+        font-size: 40px;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
 
-/* * Media Queries */
-@media (max-width: 700px) {
+    .sub {
+        font-size: 20px;
+        top: 10px;
+        left: 60%;
+        transform: translateX(-50%);
+    }
+
+    .sub2 {
+        font-size: 20px;
+        top: 140px;
+        left: 65%;
+        transform: translateX(-50%);
+    }
+
+    .content .img-logo {
+        display: none; /* Oculta a imagem */
+    }
+
     form {
-        padding: 25px 30px;
-        max-width: 600px; /* Reduz o tamanho máximo do formulário */
-        width: 100%; /* A largura agora será 100% da tela */
-        left: 0; /* Remove o deslocamento para a esquerda */
+        top: 80px;
+        margin-left: 10px;
+        padding: 20px;
+        width: 90%;
+        margin: 30px auto;
     }
 
-    /* Alterando a estrutura de opções para grid */
     .opcoes {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Ajuste no grid */
-        gap: 10px; /* Diminui o espaço entre os elementos */
-        width: 100%;
-        margin-top: 20px;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
     }
 
-    .opcao {
-        display: flex;
-        align-items: center;
-        justify-content: center; /* Centraliza as opções dentro do grid */
-        gap: 10px;
+    .candidato {
+        margin-bottom: 10px;
+    }
+
+    .foto {
+        width: 100px;
+        height: 100px;
     }
 
     button {
-        font-size: 14px;
-        padding: 8px 16px;
-        width: 100%; /* Faz o botão ocupar toda a largura disponível */
+        width: 100%;
     }
 }
 
-/* Ajustes para telas ainda menores */
-@media (max-width: 480px) {
+@media (max-width: 500px) {
+    .texto {
+        font-size: 40px;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .sub {
+        font-size: 20px;
+        top: 10px;
+        left: 60%;
+        transform: translateX(-50%);
+    }
+
+    .sub2 {
+        font-size: 20px;
+        top: 140px;
+        left: 65%;
+        transform: translateX(-50%);
+    }
+
+    .content .img-logo {
+        display: none; /* Oculta a imagem */
+    }
+
     form {
-        padding: 15px 20px;
-        max-width: 100%; /* Formulário vai ocupar toda a largura */
+        top: 80px;
+        margin-left: 10px;
+        padding: 20px;
+        width: 90%;
+        margin: 30px auto;
     }
 
     .opcoes {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Ajuste na largura das opções */
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .candidato {
+        margin-bottom: 10px;
+    }
+
+    .foto {
+        width: 70px;
+        height: 70px;
     }
 
     button {
-        font-size: 14px;
-        padding: 8px 16px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 400px) {
+    .texto {
+        font-size: 30px;
+        top: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .sub, .sub2 {
+        font-size: 18px;
+        top: 10px;
+        left: 55%;
+        transform: translateX(-50%);
+    }
+
+    .content .img-logo {
+        display: none;
+    }
+
+    form {
+        top: 60px;
+        margin-left: 5px;
+        padding: 15px;
+        width: 90%;
+        margin: 20px auto;
+    }
+
+    .opcoes {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .foto {
+        width: 60px;
+        height: 60px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 300px) {
+    .texto {
+        font-size: 30px;
+        top: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .sub{
+        font-size: 18px;
+        top: 10px;
+        left: 55%;
+        transform: translateX(-50%);
+    }
+
+    .sub2 {
+        font-size: 18px;
+        top: 10px;
+        left: 55%;
+        transform: translateX(-50%);
+    }
+
+    .content .img-logo {
+        display: none;
+    }
+
+    form {
+        margin-top: 80px;
+        margin-left: 5px;
+        padding: 20px;
+        width: 70%;
+        margin: 20px auto;
+    }
+
+    .opcoes {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .foto {
+        width: 30px;
+        height: 30px;
+    }
+
+    button {
+        width: 100%;
     }
 }
