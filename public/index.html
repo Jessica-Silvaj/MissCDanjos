@@ -50,7 +50,7 @@
             <!-- <img class="ramos" src="./images/d_4_edited-removebg-preview - Copia.png"> -->
         </section>
         <form id="formulario" action="#" autocomplete="off">
-            <div class="opcoes" style="overflow: scroll;">
+            <div class="opcoes">
                 <div class="candidato">
                     <label class="opcao" for="opcao1">
                         <input type="radio" name="voto" value="1" id="opcao1">
@@ -103,42 +103,28 @@
                 <div class="candidato">
                     <label class="opcao" for="opcao8">
                         <input type="radio" name="voto" value="8" id="opcao8">
-                        <img src="./images/avatar.png" class="foto" alt="Candidata 8">
+                        <img src="./images/kay.png" class="foto" alt="Candidata 8">
                         <span>Kalyne Miller</span>
                     </label>
                 </div>
                 <div class="candidato">
                     <label class="opcao" for="opcao9">
                         <input type="radio" name="voto" value="9" id="opcao9">
-                        <img src="./images/avatar.png" class="foto" alt="Candidata 9">
-                        <span>Cecilia Lepavlov</span>
-                    </label>
-                </div>
-                <div class="candidato">
-                    <label class="opcao" for="opcao10">
-                        <input type="radio" name="voto" value="10" id="opcao10">
-                        <img src="./images/avatar.png" class="foto" alt="Candidata 10">
-                        <span>Naomi Nakamura</span>
-                    </label>
-                </div>
-                <div class="candidato">
-                    <label class="opcao" for="opcao11">
-                        <input type="radio" name="voto" value="11" id="opcao11">
                         <img src="./images/ayumi3.png" class="foto" alt="Candidata 11">
                         <span>Ayumi Murakami</span>
                     </label>
                 </div>
                 <div class="candidato">
-                    <label class="opcao" for="opcao12">
-                        <input type="radio" name="voto" value="12" id="opcao12">
-                        <img src="./images/Five-M-b3095-GTAProcess-2025-02-10-04-12-34.png" class="foto" alt="Candidata 12">
+                    <label class="opcao" for="opcao10">
+                        <input type="radio" name="voto" value="10" id="opcao10">
+                        <img src="./images/Five-M-b3095-GTAProcess-2025-02-10-04-12-34.png" class="foto" alt="Candidata 10">
                         <span>Sara Dexter</span>
                     </label>
                 </div>
                 <div class="candidato">
-                    <label class="opcao" for="opcao13">
-                        <input type="radio" name="voto" value="13" id="opcao13">
-                        <img src="./images/elisa.png" class="foto" alt="Candidata 13">
+                    <label class="opcao" for="opcao11">
+                        <input type="radio" name="voto" value="11" id="opcao11">
+                        <img src="./images/elisa.png" class="foto" alt="Candidata 11">
                         <span>Elisa Davis</span>
                     </label>
                 </div>
@@ -170,7 +156,7 @@
             e.preventDefault();
           const selected = document.querySelector('input[name="voto"]:checked');
             if (!selected) {
-                showMessage('❌ Por favor, selecione uma das candidatas!', 'error');
+                showMessage('Por favor, selecione uma das candidatas!', 'error');
                 return;
             }
 
@@ -184,7 +170,7 @@
                 const data = await response.json();
                 showMessage(data.message, data.type || 'success');
             } catch (error) {
-                showMessage('❌ Erro ao registrar seu voto.', 'error');
+                showMessage('Erro ao registrar seu voto.', 'error');
             }
         });
     </script>

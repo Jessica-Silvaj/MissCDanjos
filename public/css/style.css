@@ -248,6 +248,7 @@ button:hover {
     }
 
     .opcoes {
+        overflow: scroll;
         grid-template-columns: 1fr 1fr;
         gap: 40px;
     }
@@ -292,6 +293,7 @@ button:hover {
     }
 
     .opcoes {
+        overflow: scroll;
         grid-template-columns: 1fr 1fr;
         gap: 20px;
     }
@@ -332,6 +334,7 @@ button:hover {
     }
 
     .opcoes {
+        overflow: scroll;
         grid-template-columns: 1fr;
         gap: 10px;
     }
