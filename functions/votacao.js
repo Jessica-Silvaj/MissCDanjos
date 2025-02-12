@@ -23,14 +23,20 @@ exports.handler = async (event) => {
         }
 
         // Função para capturar o IP corretamente
-const getClientIP = (headers) => {
-    return headers['x-forwarded-for']?.split(',')[0] ||  // Primeiro IP da lista
-           headers['x-nf-client-connection-ip'] ||       // IP fornecido pelo Netlify
-           headers['client-ip'] ||                       // Outra possível alternativa
-           headers['remote-addr'] ||                     // Padrão de fallback
-           '127.0.0.1';                                  // Se nada for encontrado, assume localhost
-};
-
+        const getClientIP = (headers) => {
+            return headers['x-forwarded-for']?.split(',')[0]?.trim() ||  // Primeiro IP da lista (pode ser múltiplo)
+                   headers['x-real-ip'] ||                              // Alternativa comum em servidores proxy
+                   headers['x-nf-client-connection-ip'] ||             // Netlify
+                   headers['cf-connecting-ip'] ||                      // Cloudflare
+                   headers['true-client-ip'] ||                        // Akamai
+                   headers['fastly-client-ip'] ||                      // Fastly
+                   headers['x-client-ip'] ||                           // Algumas configurações de proxy
+                   headers['client-ip'] ||                             // Alternativa genérica
+                   headers['forwarded']?.match(/for="\[?([^;\]]+)]?/i)?.[1] ||  // Forwarded header (raro)
+                   headers['remote-addr'] ||                           // Fallback para conexões diretas
+                   '127.0.0.1';                                        // Se nada for encontrado, assume localhost
+        };
+        
 // Expressão regular para validar IPv4 e IPv6
 const isValidIP = (ip) => {
     const ipv4Regex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){2}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
