@@ -22,25 +22,34 @@ exports.handler = async (event) => {
             };
         }
 
-        // Obter o IP do voto, considerando o X-Forwarded-For ou usando o IP local
-        const ip = event.headers['x-forwarded-for']?.split(',')[0] || event.headers['x-nf-client-connection-ip'] || '127.0.0.1';// Usando o cabeçalho ou IP local
+        // Função para capturar o IP corretamente
+const getClientIP = (headers) => {
+    return headers['x-forwarded-for']?.split(',')[0] ||  // Primeiro IP da lista
+           headers['x-nf-client-connection-ip'] ||       // IP fornecido pelo Netlify
+           headers['client-ip'] ||                       // Outra possível alternativa
+           headers['remote-addr'] ||                     // Padrão de fallback
+           '127.0.0.1';                                  // Se nada for encontrado, assume localhost
+};
 
-        console.log(ip);
+// Expressão regular para validar IPv4 e IPv6
+const isValidIP = (ip) => {
+    const ipv4Regex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){2}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    const ipv6Regex = /^([a-fA-F0-9:]+:+)+[a-fA-F0-9]+$/;
+    
+    return ipv4Regex.test(ip) || ipv6Regex.test(ip) || ip === '::1' || ip === '127.0.0.1';
+};
 
-        // Verificar se o IP foi fornecido e se é válido
-        const isValidIP = (ip) => {
-            const ipRegex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){2}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-            return ipRegex.test(ip) || ip === '::1' || ip === '127.0.0.1'; // Aceitar IPv6 (::1) e IPv4 (127.0.0.1)
-        };
+// Captura o IP do evento recebido no Netlify
+const ip = getClientIP(event.headers);
+console.log(`IP Capturado: ${ip}`);
 
-        // Verificar se o IP é válido
-        if (!ip || ip.trim() === '' || !isValidIP(ip)) {
-            return {
-                statusCode: 400,
-                body: JSON.stringify({ message: 'Não foi possível determinar seu IP!' })
-            };
-        }
-
+// Verifica se o IP é válido
+if (!ip || !isValidIP(ip)) {
+    return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'Não foi possível determinar seu IP!' })
+    };
+}
         // Conectar ao banco de dados
         db = await connectDB();
         await db.query('BEGIN');
