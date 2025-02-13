@@ -137,51 +137,51 @@
                 </div>
             </div>
 
-            <!-- <button>Votação Encerradas</button> -->
-            <button type="submit">Votar</button>
+            <button>Votação Encerradas</button>
+            <!-- <button type="submit">Votar</button> -->
         </form>
     </div>
     <script>
-    function showMessage(message, type = '') {
-        const alertContainer = document.getElementById('alertContainer');
+    // function showMessage(message, type = '') {
+    //     const alertContainer = document.getElementById('alertContainer');
         
-        // Verifica o tipo do alerta e adiciona a classe correspondente
-        let alertClass = '';
-        if (type === 'success') {
-            alertClass = 'alert-success'; // Sucesso
-        } else if (type === 'error') {
-            alertClass = 'alert-error'; // Erro
-        }
+    //     // Verifica o tipo do alerta e adiciona a classe correspondente
+    //     let alertClass = '';
+    //     if (type === 'success') {
+    //         alertClass = 'alert-success'; // Sucesso
+    //     } else if (type === 'error') {
+    //         alertClass = 'alert-error'; // Erro
+    //     }
 
-        alertContainer.innerHTML = `<div class="alert ${alertClass}">${message}</div>`;
+    //     alertContainer.innerHTML = `<div class="alert ${alertClass}">${message}</div>`;
 
-        // Remove o alerta após 5 segundos
-        setTimeout(() => {
-            alertContainer.innerHTML = '';
-        }, 5000);
-    }
+    //     // Remove o alerta após 5 segundos
+    //     setTimeout(() => {
+    //         alertContainer.innerHTML = '';
+    //     }, 5000);
+    // }
 
-        document.getElementById('formulario').addEventListener('submit', async (e) => {
-            e.preventDefault();
-        const selected = document.querySelector('input[name="voto"]:checked');
-            if (!selected) {
-                showMessage('Por favor, selecione uma das candidatas!', 'error');
-                return;
-            }
+    //     document.getElementById('formulario').addEventListener('submit', async (e) => {
+    //         e.preventDefault();
+    //     const selected = document.querySelector('input[name="voto"]:checked');
+    //         if (!selected) {
+    //             showMessage('Por favor, selecione uma das candidatas!', 'error');
+    //             return;
+    //         }
 
-            const candidate = selected.value;
-            try {
-                const response = await fetch('/.netlify/functions/votacao', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ candidate })
-                });
-                const data = await response.json();
-                showMessage(data.message, data.type || 'success');
-            } catch (error) {
-                showMessage('Erro ao registrar seu voto.', 'error');
-            }
-        });
+    //         const candidate = selected.value;
+    //         try {
+    //             const response = await fetch('/.netlify/functions/votacao', {
+    //                 method: 'POST',
+    //                 headers: { 'Content-Type': 'application/json' },
+    //                 body: JSON.stringify({ candidate })
+    //             });
+    //             const data = await response.json();
+    //             showMessage(data.message, data.type || 'success');
+    //         } catch (error) {
+    //             showMessage('Erro ao registrar seu voto.', 'error');
+    //         }
+    //     });
     </script>
 </body>
 
